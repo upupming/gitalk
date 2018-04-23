@@ -149,6 +149,8 @@ class GitalkComponent extends Component {
   get loginLink () {
     const githubOauthUrl = 'http://github.com/login/oauth/authorize'
     const { clientID } = this.options
+    // Set the hash property
+    location.hash = "gt-container";
     const query = {
       client_id: clientID,
       redirect_uri: location.href,
