@@ -4,6 +4,7 @@ import autosize from 'autosize'
 
 import i18n from './i18n'
 import './style/index.styl'
+import './style/markdown.css'
 import {
   queryParse,
   queryStringify,
@@ -50,6 +51,7 @@ class GitalkComponent extends Component {
     this.options = Object.assign({}, {
       id: location.href,
       labels: ['Gitalk'],
+      containerID: 'gitalk-container',
       title: document.title,
       body: '', // location.href + header.meta[description]
       language: navigator.language || navigator.userLanguage,
@@ -148,9 +150,9 @@ class GitalkComponent extends Component {
   }
   get loginLink () {
     const githubOauthUrl = 'http://github.com/login/oauth/authorize'
-    const { clientID } = this.options
+    const { clientID,  containerID} = this.options
     // Set the hash property
-    location.hash = "gt-container";
+    location.hash = containerID
     const query = {
       client_id: clientID,
       redirect_uri: location.href,
@@ -545,6 +547,9 @@ class GitalkComponent extends Component {
             onKeyDown={this.handleCommentKeyDown}
             placeholder={this.i18n.t('leave-a-comment')}
           />
+          <div className="gt-header-comment markdown-body">
+            ${comment.body_html}
+          </div>
           <div className="gt-header-controls">
             <a className="gt-header-controls-tip" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
               <Svg className="gt-ico-tip" name="tip" text={this.i18n.t('support-markdown')}/>
